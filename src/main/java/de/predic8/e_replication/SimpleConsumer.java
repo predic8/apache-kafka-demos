@@ -1,5 +1,6 @@
 package de.predic8.e_replication;
 
+import de.predic8.b_offset.OffsetBeginningRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -24,7 +25,7 @@ public class SimpleConsumer {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Arrays.asList("bar"));
+        consumer.subscribe(Arrays.asList("produktion"), new OffsetBeginningRebalanceListener(consumer, "produktion"));
 
         while(true) {
 
@@ -32,11 +33,10 @@ public class SimpleConsumer {
             if (records.count() == 0)
                 continue;
 
-            System.out.print("Partitions: " + records.partitions());
             System.out.println(" Count: " + records.count());
 
-            for (ConsumerRecord<String, String> record : records)
-                System.out.printf("offset= %d, key= %s, value= %s\n", record.offset(), record.key(), record.value());
+            for (ConsumerRecord<String, String> rec : records)
+                System.out.printf("partition= %d, offset= %d, key= %s, value= %s\n", rec.partition(), rec.offset(), rec.key(), rec.value());
 
         }
     }

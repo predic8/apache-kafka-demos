@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 
-public class Consumer {
+public class SimpleConsumer {
 
     public static void main(String[] args) throws InterruptedException {
 

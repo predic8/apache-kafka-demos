@@ -9,7 +9,7 @@ buildNumber.properties
 .mvn/timing.properties
 .idea
 *..iml
-.DS_Store
+**/.DS_Store
 
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)

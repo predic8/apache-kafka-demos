@@ -3,7 +3,6 @@ package de.predic8.b_offset;
 import org.apache.kafka.clients.consumer.ConsumerRebalanceListener;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
-import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -13,11 +12,11 @@ public class OffsetBeginningRebalanceListener implements ConsumerRebalanceListen
 
     private final KafkaConsumer<String, String> consumer;
     private boolean resetted;
-    private String partition;
+    private String topic;
 
-    public OffsetBeginningRebalanceListener(KafkaConsumer<String, String> consumer, String partition) {
+    public OffsetBeginningRebalanceListener(KafkaConsumer<String, String> consumer, String topic) {
         this.consumer = consumer;
-        this.partition = partition;
+        this.topic = topic;
     }
 
     @Override
@@ -40,7 +39,7 @@ public class OffsetBeginningRebalanceListener implements ConsumerRebalanceListen
         System.out.println();
 
         if (!resetted) {
-            consumer.seekToBeginning(Collections.singletonList(new TopicPartition(partition,0)));
+            consumer.seekToBeginning(partitions);
             resetted = true;
         }
     }
