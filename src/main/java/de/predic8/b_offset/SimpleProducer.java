@@ -36,7 +36,7 @@ public class SimpleProducer {
 
         String msg= json.toString();
 
-        for(int i = 1; i <= 1000000; i++) {
+        for(int i = 1; i <= 10; i++) {
 
             String key = String.valueOf(round(random() * 1000));
             double value = new Double(round(random()*10000000L)).intValue()/1000.0;

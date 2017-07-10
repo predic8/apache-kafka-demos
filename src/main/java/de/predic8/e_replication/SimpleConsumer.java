@@ -15,7 +15,8 @@ public class SimpleConsumer {
     public static void main(String[] args) throws InterruptedException {
 
         Properties props = new Properties();
-        props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9093");
+        props.put("group.initial.rebalance.delay.ms",0);
         props.put(GROUP_ID_CONFIG, "a");
         props.put(ENABLE_AUTO_COMMIT_CONFIG, "true");
         props.put(AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
