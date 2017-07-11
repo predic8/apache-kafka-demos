@@ -26,7 +26,7 @@ public class SimpleConsumer_A {
 
         consumer.subscribe(Arrays.asList("produktion"));
 
-        System.out.println("SimpleConsumer gestartet!");
+        System.out.println("Consumer gestartet!");
 
         while(true) {
 

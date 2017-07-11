@@ -1,15 +1,16 @@
-package de.predic8.a_simple;
+package de.predic8.i_headers;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.header.Header;
 
 import java.util.Arrays;
 import java.util.Properties;
 
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 
-public class Consumer_A {
+public class HeaderConsumer {
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -26,7 +27,7 @@ public class Consumer_A {
 
         consumer.subscribe(Arrays.asList("produktion"));
 
-        System.out.println("Consumer A gestartet!");
+        System.out.println("HeaderConsumer gestartet!");
 
         while(true) {
 
@@ -34,8 +35,15 @@ public class Consumer_A {
             if (records.count() == 0)
                 continue;
 
-            for (ConsumerRecord<String, String> record : records)
-                System.out.printf("offset= %d, key= %s, value= %s\n", record.offset(), record.key(), record.value());
+            for (ConsumerRecord<String, String> rec : records) {
+
+                System.out.printf("offset= %d, key= %s, value= %s\n", rec.offset(), rec.key(), rec.value());
+                for (Header h : rec.headers()) {
+                    System.out.println(h.key() + ": " + new String(h.value()));
+
+                }
+            }
+
 
         }
     }

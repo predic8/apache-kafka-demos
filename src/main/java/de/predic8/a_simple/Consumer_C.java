@@ -26,6 +26,8 @@ public class Consumer_C {
 
         consumer.subscribe(Arrays.asList("produktion"));
 
+        System.out.println("Consumer C gestartet!");
+
         while(true) {
 
             ConsumerRecords<String, String> records = consumer.poll(1000);

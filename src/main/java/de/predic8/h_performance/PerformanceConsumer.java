@@ -26,7 +26,7 @@ public class PerformanceConsumer {
 
         consumer.subscribe(Arrays.asList("produktion"), new AssignmentDisplayRebalanceListener());
 
-        System.out.println("SimpleConsumer gestartet!");
+        System.out.println("Consumer gestartet!");
 
         long t1 = 0, i = 0;
 
