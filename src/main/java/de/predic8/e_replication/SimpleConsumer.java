@@ -15,8 +15,7 @@ public class SimpleConsumer {
     public static void main(String[] args) throws InterruptedException {
 
         Properties props = new Properties();
-        props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9093");
-        props.put("group.initial.rebalance.delay.ms",0);
+        props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(GROUP_ID_CONFIG, "a");
         props.put(ENABLE_AUTO_COMMIT_CONFIG, "true");
         props.put(AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
@@ -37,7 +36,7 @@ public class SimpleConsumer {
             System.out.println(" Count: " + records.count());
 
             for (ConsumerRecord<String, String> rec : records)
-                System.out.printf("partition= %d, offset= %d, key= %s, value= %s\n", rec.partition(), rec.offset(), rec.key(), rec.value());
+                System.out.printf("partition= %d, offset= %d, key= %d, value= %s\n", rec.partition(), rec.offset(), rec.key(), rec.value());
 
         }
     }
