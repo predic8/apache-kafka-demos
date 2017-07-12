@@ -1,6 +1,5 @@
 package de.predic8.c_queueing;
 
-import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
 import de.predic8.LogRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
