@@ -9,8 +9,6 @@ public class ArtikelProducer {
 
     public static void main(String[] args) throws InterruptedException {
 
-
-
         Properties props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ACKS_CONFIG, "all");
@@ -18,8 +16,8 @@ public class ArtikelProducer {
         props.put(BATCH_SIZE_CONFIG, 16000);
         props.put(LINGER_MS_CONFIG, 100);
         props.put(BUFFER_MEMORY_CONFIG, 33554432);
-        props.put(KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.LongSerializer");
-        props.put(VALUE_SERIALIZER_CLASS_CONFIG, "de.predic8.j_serialization.ArtikelSerializer");
+        props.put(KEY_SERIALIZER_CLASS_CONFIG, "");
+        props.put(VALUE_SERIALIZER_CLASS_CONFIG, "");
 
     }
 }
