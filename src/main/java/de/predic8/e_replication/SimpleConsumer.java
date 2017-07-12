@@ -36,7 +36,7 @@ public class SimpleConsumer {
             System.out.println(" Count: " + records.count());
 
             for (ConsumerRecord<String, String> rec : records)
-                System.out.printf("partition= %d, offset= %d, key= %d, value= %s\n", rec.partition(), rec.offset(), rec.key(), rec.value());
+                System.out.printf("partition= %d, offset= %d, key= %s, value= %s\n", rec.partition(), rec.offset(), rec.key(), rec.value());
 
         }
     }
