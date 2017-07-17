@@ -43,7 +43,9 @@ public class HeaderProducer {
                     .build();
 
             ProducerRecord<String, String> record = new ProducerRecord<>("produktion", key, json.toString());
-            record.headers().add("CorrelationID","4345".getBytes());
+
+
+
             producer.send(record);
         }
         System.out.println("fertig " + i + " Nachrichten in " + (System.currentTimeMillis() - t1 + " ms"));
