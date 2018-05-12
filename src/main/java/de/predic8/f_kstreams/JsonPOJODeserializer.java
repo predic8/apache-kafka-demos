@@ -1,16 +1,14 @@
 package de.predic8.f_kstreams;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 
-import javax.xml.bind.DatatypeConverter;
-import java.util.Base64;
 import java.util.Map;
 
 public class JsonPOJODeserializer<T> implements Deserializer<T> {
 
-    private Gson gson = new Gson();
+    private ObjectMapper mapper = new ObjectMapper();
     private Class<T> tClass;
 
     public JsonPOJODeserializer() {
@@ -29,7 +27,7 @@ public class JsonPOJODeserializer<T> implements Deserializer<T> {
             return null;
 
         try {
-           return gson.fromJson(new String(bytes, "UTF-8"), tClass);
+           return mapper.readValue(new String(bytes, "UTF-8"), tClass);
         } catch (Exception e) {
             throw new SerializationException(e);
         }
