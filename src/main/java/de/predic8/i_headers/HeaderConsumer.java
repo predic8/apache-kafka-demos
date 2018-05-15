@@ -25,7 +25,7 @@ public class HeaderConsumer {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Arrays.asList("produktion"));
+        consumer.subscribe(Arrays.asList("produktion2"));
 
         System.out.println("HeaderConsumer gestartet!");
 
@@ -38,6 +38,10 @@ public class HeaderConsumer {
             for (ConsumerRecord<String, String> rec : records) {
 
                 System.out.printf("offset= %d, key= %s, value= %s\n", rec.offset(), rec.key(), rec.value());
+                for (Header h : rec.headers()) {
+                    System.out.println(h.key() + ": " + new String(h.value()));
+                }
+
 
             }
 

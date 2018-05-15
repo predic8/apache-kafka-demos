@@ -42,8 +42,9 @@ public class HeaderProducer {
                     .add("kw",value)
                     .build();
 
-            ProducerRecord<String, String> record = new ProducerRecord<>("produktion", key, json.toString());
+            ProducerRecord<String, String> record = new ProducerRecord<>("produktion2", key, json.toString());
 
+            record.headers().add("CorrelationID","4345".getBytes());
 
 
             producer.send(record);
