@@ -1,5 +1,6 @@
 package de.predic8.k_transactions;
 
+import de.predic8.b_offset.OffsetBeginningRebalanceListener;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -29,15 +30,17 @@ public class TransactionalReadWrite {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerProperties());
 
-        consumer.subscribe(singleton("a"));
+        consumer.subscribe(singleton("produktion"),new OffsetBeginningRebalanceListener(consumer,"produktion"));
 
         while (true) {
             ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);
+
             System.out.println("Received something!");
+
             producer.beginTransaction();
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("record = " + record);
-                producer.send(new ProducerRecord<String, String>("b", record.key(), record.value()));
+                producer.send(new ProducerRecord<String, String>("produktion-tmp", record.key(), record.value()));
             }
 
 //            producer.sendOffsetsToTransaction(currentOffsets(consumer), group);
