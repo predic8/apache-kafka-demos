@@ -10,7 +10,7 @@ import java.util.Properties;
 
 import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
-public class SimpleProducer {
+public class RandomProducer {
 
     public static void main(String[] args) throws InterruptedException {
 
