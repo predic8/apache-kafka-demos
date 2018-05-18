@@ -38,10 +38,6 @@ public class HeaderConsumer {
             for (ConsumerRecord<String, String> rec : records) {
 
                 System.out.printf("offset= %d, key= %s, value= %s\n", rec.offset(), rec.key(), rec.value());
-                for (Header h : rec.headers()) {
-                    System.out.println(h.key() + ": " + new String(h.value()));
-                }
-
 
             }
 
