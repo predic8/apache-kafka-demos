@@ -1,5 +1,5 @@
 ./bin/kafka-consumer-perf-test.sh \
-    	--zookeeper localhost:2181 \
+        --broker-list localhost:9092 \
     	--topic test \
     	--messages 100000 \
     	--print-metrics

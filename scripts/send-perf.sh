@@ -1,4 +1,4 @@
-kafka-producer-perf-test.sh \
+./bin/kafka-producer-perf-test.sh \
 --producer-props bootstrap.servers=localhost:9092 \
 --throughput 15000000 \
 --topic test \
