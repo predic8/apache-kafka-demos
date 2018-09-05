@@ -4,9 +4,11 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Properties;
 
+import static java.time.Duration.ofSeconds;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 
 public class Consumer_A {
@@ -30,7 +32,7 @@ public class Consumer_A {
 
         while(true) {
 
-            ConsumerRecords<String, String> records = consumer.poll(1000);
+            ConsumerRecords<String, String> records = consumer.poll(ofSeconds(1));
             if (records.count() == 0)
                 continue;
 
