@@ -6,7 +6,7 @@ import org.apache.kafka.common.serialization.Serializer;
 
 import java.util.Map;
 
-public class ArtikelSerializer implements Serializer<Artikel>, Deserializer<Artikel>
+public class ArtikelSerde implements Serializer<Artikel>, Deserializer<Artikel>
 {
 
     private ObjectMapper mapper = new ObjectMapper();

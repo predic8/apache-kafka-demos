@@ -5,8 +5,8 @@ import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.Serializer;
 import org.apache.kafka.streams.KafkaStreams;
+import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
-import org.apache.kafka.streams.kstream.KStreamBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,13 +39,15 @@ public class FilterStream {
 
         StreamsConfig config = new StreamsConfig(props);
 
-        KStreamBuilder builder = new KStreamBuilder();
+        StreamsBuilder builder = new StreamsBuilder();
 
-        builder.stream(Serdes.String(), serde, "produktion")
-                .filter( (k,v) -> v.type.equals("Biogas"))
-                .to(Serdes.String(), serde,"produktion2");
+        //  Before 2.0.0: builder.stream(Serdes.String(), serde, "produktion")
 
-        KafkaStreams streams = new KafkaStreams(builder, config);
-        streams.start();
+//        builder.stream("produktion")
+//                .filter( (k,v) -> v.type.equals("Biogas"))
+//                .to("produktion2");
+//
+//        KafkaStreams streams = new KafkaStreams( builder, config);
+//        streams.start();
     }
 }
