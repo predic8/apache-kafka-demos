@@ -4,7 +4,6 @@ import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.Serializer;
-import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
 import org.apache.kafka.streams.StreamsConfig;
 
@@ -16,7 +15,7 @@ import static org.apache.kafka.streams.StreamsConfig.*;
 
 public class FilterStream {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         Properties props = new Properties();
         props.put(APPLICATION_ID_CONFIG, "my-stream-processing-application");

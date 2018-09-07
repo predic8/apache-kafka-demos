@@ -9,4 +9,4 @@ $KAFKA_HOME/bin/kafka-topics.sh --create --zookeeper localhost:2181 --replicatio
                                                                               --config min.cleanable.dirty.ratio=0.01 \
                                                                               --config cleanup.policy=compact \
                                                                               --config segment.ms=100 \
-                                                                              --config delete.retention.ms=100 \
+                                                                              --config delete.retention.ms=100

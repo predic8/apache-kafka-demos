@@ -15,7 +15,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
 public class SimpleProducer {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         Properties props = new Properties();
 

@@ -9,7 +9,7 @@ import java.util.Map;
 public class ArtikelSerde implements Serializer<Artikel>, Deserializer<Artikel>
 {
 
-    private ObjectMapper mapper = new ObjectMapper();
+    private static ObjectMapper mapper = new ObjectMapper();
 
     @Override
     public void configure(Map<String, ?> map, boolean b) {

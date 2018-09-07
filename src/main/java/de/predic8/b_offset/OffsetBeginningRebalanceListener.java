@@ -5,7 +5,6 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 
 import java.util.Collection;
-import java.util.Collections;
 
 public class OffsetBeginningRebalanceListener implements ConsumerRebalanceListener {
 

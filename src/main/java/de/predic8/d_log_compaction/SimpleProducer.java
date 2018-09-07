@@ -10,7 +10,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
 public class SimpleProducer {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         Properties props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
@@ -22,7 +22,7 @@ public class SimpleProducer {
         props.put(KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         props.put(VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
 
-        StringBuffer muellBuffer = new StringBuffer();
+        StringBuilder muellBuffer = new StringBuilder();
         for(int j = 0; j < 100000; j++) {
             muellBuffer.append(j);
         }

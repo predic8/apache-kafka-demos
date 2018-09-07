@@ -44,7 +44,7 @@ public class PowerProducer {
             messung.type=types[key];
             messung.kw=value;
 
-            producer.send(new ProducerRecord<String,Messung>("produktion", "" + key, messung));
+            producer.send(new ProducerRecord<>("produktion", "" + key, messung));
 
             Thread.sleep(1000);
         }

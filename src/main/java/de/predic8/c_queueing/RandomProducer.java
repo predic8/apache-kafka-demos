@@ -1,7 +1,6 @@
 package de.predic8.c_queueing;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import static java.lang.Math.random;
 import static java.lang.Math.round;
@@ -12,7 +11,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
 public class RandomProducer {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         Properties props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");

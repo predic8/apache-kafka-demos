@@ -14,7 +14,7 @@ import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
 public class HeaderProducer {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         Properties props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");

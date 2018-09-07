@@ -42,11 +42,15 @@ public class Messung {
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append("anlage: " + anlage);
-        buf.append("\ntype: " + type);
-        buf.append("\nkw:" + kw);
 
-        return buf.toString();
+        return new StringBuilder()
+                .append("anlage: ")
+                .append(anlage)
+                .append("\ntype: ")
+                .append(type)
+                .append("\nkw:")
+                .append(kw)
+                .toString();
+
     }
 }

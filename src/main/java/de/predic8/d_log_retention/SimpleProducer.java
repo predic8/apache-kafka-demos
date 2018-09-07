@@ -23,7 +23,7 @@ public class SimpleProducer {
         props.put(VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
 
 
-        StringBuffer muellBuffer = new StringBuffer();
+        StringBuilder muellBuffer = new StringBuilder();
         for(int j = 0; j < 100000; j++) {
             muellBuffer.append(j);
         }

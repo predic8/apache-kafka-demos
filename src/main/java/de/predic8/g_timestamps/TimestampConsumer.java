@@ -4,14 +4,18 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Properties;
 
+import static java.time.Duration.ofSeconds;
+import static java.util.Collections.singletonList;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 
 public class TimestampConsumer {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         Properties props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
@@ -24,13 +28,13 @@ public class TimestampConsumer {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Arrays.asList("produktion"));
+        consumer.subscribe( singletonList("produktion"));
 
         System.out.println("Consumer gestartet!");
 
         while(true) {
 
-            ConsumerRecords<String, String> records = consumer.poll(1000);
+            ConsumerRecords<String, String> records = consumer.poll( ofSeconds(1));
             if (records.count() == 0)
                 continue;
 

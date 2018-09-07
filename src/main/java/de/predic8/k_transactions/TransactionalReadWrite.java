@@ -8,12 +8,10 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import javax.json.Json;
-import javax.json.JsonObject;
+import java.time.Duration;
 import java.util.Properties;
 
-import static java.lang.Math.random;
-import static java.lang.Math.round;
+import static java.time.Duration.ofMillis;
 import static java.util.Collections.singleton;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 import static org.apache.kafka.clients.producer.ProducerConfig.*;
@@ -22,7 +20,7 @@ import static org.apache.kafka.streams.StreamsConfig.BOOTSTRAP_SERVERS_CONFIG;
 
 public class TransactionalReadWrite {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         Producer<String, String> producer = new KafkaProducer<>(producerProperties());
 
@@ -33,14 +31,14 @@ public class TransactionalReadWrite {
         consumer.subscribe(singleton("produktion"),new OffsetBeginningRebalanceListener(consumer,"produktion"));
 
         while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE);
+            ConsumerRecords<String, String> records = consumer.poll( ofMillis(10));
 
             System.out.println("Received something!");
 
             producer.beginTransaction();
             for (ConsumerRecord<String, String> record : records) {
                 System.out.println("record = " + record);
-                producer.send(new ProducerRecord<String, String>("produktion-tmp", record.key(), record.value()));
+                producer.send(new ProducerRecord<>("produktion-tmp", record.key(), record.value()));
             }
 
 //            producer.sendOffsetsToTransaction(currentOffsets(consumer), group);

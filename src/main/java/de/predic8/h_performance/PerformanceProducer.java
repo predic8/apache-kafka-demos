@@ -4,17 +4,13 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 
-import javax.json.Json;
-import javax.json.JsonObject;
 import java.util.Properties;
 
-import static java.lang.Math.random;
-import static java.lang.Math.round;
 import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
 public class PerformanceProducer {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         Properties props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
@@ -35,7 +31,7 @@ public class PerformanceProducer {
 
             producer.send(new ProducerRecord<>("produktion", i, i));
         }
-        producer.send(new ProducerRecord<Long,Long>("produktion", (long) -1, (long)-1));
+        producer.send(new ProducerRecord<>("produktion", (long) -1, (long) -1));
         System.out.println("fertig " + i  + " Nachrichten in " + (System.currentTimeMillis() - t1 + " ms"));
 
         producer.close();
