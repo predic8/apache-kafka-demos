@@ -45,7 +45,7 @@ public class PerformanceProducer {
 
             producer.send(new ProducerRecord<>("produktion", key,msg ));
         }
-        System.out.println("Zeit: " + (System.currentTimeMillis() - t1)/1000 + "s");
+        System.out.println("Zeit: " + ((System.currentTimeMillis() - t1)/1000f) + " Sek.");
 
         producer.close();
     }
