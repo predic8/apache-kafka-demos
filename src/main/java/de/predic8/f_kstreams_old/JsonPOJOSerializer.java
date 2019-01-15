@@ -1,4 +1,4 @@
-package de.predic8.f_kstreams;
+package de.predic8.f_kstreams_old;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.errors.SerializationException;

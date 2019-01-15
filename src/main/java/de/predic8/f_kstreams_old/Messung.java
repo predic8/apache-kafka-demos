@@ -1,4 +1,4 @@
-package de.predic8.f_kstreams;
+package de.predic8.f_kstreams_old;
 
 /**
  * Created by thomas on 26.11.16.

@@ -1,4 +1,4 @@
-package de.predic8.f_kstreams;
+package de.predic8.f_kstreams_old;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;

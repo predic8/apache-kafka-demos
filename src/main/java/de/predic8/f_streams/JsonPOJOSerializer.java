@@ -1,18 +1,17 @@
-package de.predic8.f_kstreams;
+package de.predic8.f_streams;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.errors.SerializationException;
-import org.apache.kafka.common.serialization.Deserializer;
+import org.apache.kafka.common.serialization.Serializer;
 
 import java.util.Map;
 
-public class JsonPOJODeserializer<T> implements Deserializer<T> {
+public class JsonPOJOSerializer<T> implements Serializer<T> {
 
-    private ObjectMapper mapper = new ObjectMapper();
     private Class<T> tClass;
+    private ObjectMapper mapper = new ObjectMapper();
 
-    public JsonPOJODeserializer() {
-    }
+    public JsonPOJOSerializer() {}
 
     @SuppressWarnings("unchecked")
     @Override
@@ -21,20 +20,20 @@ public class JsonPOJODeserializer<T> implements Deserializer<T> {
     }
 
     @Override
-    public T deserialize(String topic, byte[] bytes) {
+    public byte[] serialize(String topic, T data) {
 
-        if (bytes == null)
+        if (data == null)
             return null;
 
         try {
-           return mapper.readValue(new String(bytes, "UTF-8"), tClass);
+            return mapper.writeValueAsBytes(data);
         } catch (Exception e) {
-            throw new SerializationException(e);
+            throw new SerializationException("Error serializing " + data, e);
         }
     }
 
     @Override
     public void close() {
-
     }
+
 }
