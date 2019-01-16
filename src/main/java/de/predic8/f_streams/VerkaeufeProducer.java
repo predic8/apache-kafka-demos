@@ -1,6 +1,5 @@
 package de.predic8.f_streams;
 
-import de.predic8.f_kstreams_old.JsonPOJOSerializer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;

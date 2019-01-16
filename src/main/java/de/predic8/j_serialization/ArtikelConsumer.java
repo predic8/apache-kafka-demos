@@ -14,8 +14,7 @@ public class ArtikelConsumer {
         props.put(ENABLE_AUTO_COMMIT_CONFIG, "true");
         props.put(AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
         props.put(SESSION_TIMEOUT_MS_CONFIG, "30000");
-        props.put(KEY_DESERIALIZER_CLASS_CONFIG, "");
-        props.put(VALUE_DESERIALIZER_CLASS_CONFIG, "");
+
 
     }
 }

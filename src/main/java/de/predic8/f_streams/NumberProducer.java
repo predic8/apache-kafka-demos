@@ -11,7 +11,7 @@ import java.util.Properties;
 import static java.lang.Math.random;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG;
 
-public class ContinuousNumberProducer {
+public class NumberProducer {
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -25,7 +25,7 @@ public class ContinuousNumberProducer {
         int i = 0;
         while ( true) {
             i++;
-            producer.send(new ProducerRecord<>("numbers-cont", i, random() * 1000));
+            producer.send(new ProducerRecord<>("numbers", i, random() * 1000));
             Thread.sleep(1000);
         }
 

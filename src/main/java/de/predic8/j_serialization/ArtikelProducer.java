@@ -16,8 +16,7 @@ public class ArtikelProducer {
         props.put(BATCH_SIZE_CONFIG, 16000);
         props.put(LINGER_MS_CONFIG, 100);
         props.put(BUFFER_MEMORY_CONFIG, 33554432);
-        props.put(KEY_SERIALIZER_CLASS_CONFIG, "");
-        props.put(VALUE_SERIALIZER_CLASS_CONFIG, "");
+
 
     }
 }

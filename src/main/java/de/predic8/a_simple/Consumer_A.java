@@ -31,6 +31,8 @@ public class Consumer_A {
 
         System.out.println("Consumer A gestartet!");
 
+        Runtime.getRuntime().addShutdownHook(new Thread(consumer::close));
+
         while(true) {
 
             ConsumerRecords<String, String> records = consumer.poll(ofSeconds(1));

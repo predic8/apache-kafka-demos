@@ -17,16 +17,6 @@ public class Verkauf {
     public Verkauf() {
     }
 
-    @Override
-    public String toString() {
-        return "Verkauf{" +
-                "ware=" + ware +
-                ", menge=" + menge +
-                ", warengruppe='" + warengruppe + '\'' +
-                ", markt='" + markt + '\'' +
-                '}';
-    }
-
     public long getWare() {
         return ware;
     }
@@ -57,5 +47,15 @@ public class Verkauf {
 
     public void setMarkt(String markt) {
         this.markt = markt;
+    }
+
+    @Override
+    public String toString() {
+        return "Verkauf{" +
+                "ware=" + ware +
+                ", menge=" + menge +
+                ", warengruppe='" + warengruppe + '\'' +
+                ", markt='" + markt + '\'' +
+                '}';
     }
 }

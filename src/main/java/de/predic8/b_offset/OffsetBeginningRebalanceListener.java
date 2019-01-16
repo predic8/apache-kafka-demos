@@ -20,22 +20,12 @@ public class OffsetBeginningRebalanceListener implements ConsumerRebalanceListen
 
     @Override
     public void onPartitionsRevoked(Collection<TopicPartition>partitions) {
-        System.out.println("Revoked from");
-
-        for (TopicPartition partition : partitions) {
-            System.out.println("collection = [" + partition + "]");
-        }
+        System.out.printf("Revoked from: %s\n", partitions );
     }
 
     @Override
     public void onPartitionsAssigned(Collection<TopicPartition> partitions) {
-        System.out.println("Assigned to :");
-
-        for (TopicPartition partition : partitions) {
-            System.out.print(partition );
-        }
-
-        System.out.println();
+        System.out.printf("Assigned to: %s\n\n", partitions );
 
         if (!resetted) {
             consumer.seekToBeginning(partitions);

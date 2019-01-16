@@ -4,11 +4,10 @@ import org.apache.kafka.streams.processor.Processor;
 import org.apache.kafka.streams.processor.ProcessorContext;
 
 public class SampleProcessor implements Processor<Integer,Double> {
+
     @Override
     public void init(ProcessorContext ctx) {
-        System.out.println("ctx = " + ctx);
-        System.out.println("Init");
-
+        System.out.println("Init ctx = " + ctx);
     }
 
     @Override

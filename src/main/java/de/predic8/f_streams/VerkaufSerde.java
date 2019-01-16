@@ -1,8 +1,6 @@
 package de.predic8.f_streams;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import de.predic8.f_kstreams.JsonPOJODeserializer;
-import de.predic8.f_kstreams.JsonPOJOSerializer;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.Serde;
 import org.apache.kafka.common.serialization.Serializer;
@@ -29,6 +27,7 @@ public class VerkaufSerde implements Serde<Verkauf> {
 
     @Override
     public Deserializer<Verkauf> deserializer() {
+
         Map<String, Object> serdeProps = new HashMap<>();
         serdeProps.put("JsonPOJOClass", Verkauf.class);
         JsonPOJODeserializer<Verkauf>  deserializer = new JsonPOJODeserializer<Verkauf>();
