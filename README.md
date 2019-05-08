@@ -1,7 +1,3 @@
-# Vorbereitung
-
-cp ./myconfig/* $KAFKA_HOME
-
 # Troubleshoting
 
 * Delete logs, zookeeper
