@@ -10,7 +10,8 @@ buildNumber.properties
 .idea
 *..iml
 **/.DS_Store
-
+Log*
+*iml
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar

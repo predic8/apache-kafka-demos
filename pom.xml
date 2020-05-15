@@ -18,6 +18,14 @@
             <artifactId>kafka-clients</artifactId>
             <version>${kafka.version}</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.13</artifactId>
+            <version>2.5.0</version>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
@@ -57,6 +65,43 @@
                         <target>1.8</target>
                     </configuration>
                 </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.3.1</version>
+                    <configuration>
+                        <archive>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <mainClass>de.predic8.a_simple.Consumer_A</mainClass>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-assembly-plugin</artifactId>
+                    <configuration>
+                        <descriptorRefs>
+                            <descriptorRef>jar-with-dependencies</descriptorRef>
+                        </descriptorRefs>
+                        <archive>
+                            <manifest>
+                                <mainClass>de.predic8.a_simple.Consumer_A</mainClass>
+                            </manifest>
+                        </archive>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>make-my-jar-with-dependencies</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>single</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
         </pluginManagement>
     </build>
