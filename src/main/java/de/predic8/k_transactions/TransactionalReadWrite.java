@@ -1,6 +1,7 @@
 package de.predic8.k_transactions;
 
 import de.predic8.b_offset.OffsetBeginningRebalanceListener;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -32,7 +33,7 @@ public class TransactionalReadWrite {
                 while (true) {
                     ConsumerRecords<String, String> records = consumer.poll(ofMillis(10));
 
-                    System.out.println("Received something!");
+                    System.out.println("Received " + records.count());
 
                     producer.beginTransaction();
                     for (ConsumerRecord<String, String> record : records) {
@@ -40,9 +41,8 @@ public class TransactionalReadWrite {
                         producer.send(new ProducerRecord<>("produktion-tmp", record.key(), record.value()));
                     }
 
-//            producer.sendOffsetsToTransaction(currentOffsets(consumer), group);
                     producer.commitTransaction();
-//            producer.abortTransaction();
+                    consumer.commitSync();
                 }
             }
         }
@@ -52,10 +52,12 @@ public class TransactionalReadWrite {
         Properties props = common();
         props.put(CLIENT_ID_CONFIG, "consumer-b");
         props.put(GROUP_ID_CONFIG, "kopierer");
-        //props.put(ENABLE_AUTO_COMMIT_CONFIG, "true");
+        props.put(ENABLE_AUTO_COMMIT_CONFIG, "false");
 
-        // Nur nicht-transaktionale oder committed Nachrichten lesen
-        props.put("isolation.level", "read_committed");
+        // Nur Nachrichten lesen, die erfolgreich "committed" wurden! Aboarted Messages werden
+        // übersprungen => Es können Lücken im Offset entstehen!
+        props.put(ISOLATION_LEVEL_CONFIG, "read_committed");
+
         return props;
     }
 
