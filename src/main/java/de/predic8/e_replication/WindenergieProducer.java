@@ -1,4 +1,4 @@
-package de.predic8.b_offset;
+package de.predic8.e_replication;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -11,36 +11,30 @@ import java.util.Properties;
 
 import static java.lang.Math.random;
 import static java.lang.Math.round;
+import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG;
 import static org.apache.kafka.clients.producer.ProducerConfig.*;
 
-public class PerformanceProducer {
+public class WindenergieProducer {
 
     public static void main(String[] args) {
 
         Properties props = new Properties();
-        props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
-        props.put(BATCH_SIZE_CONFIG, 0);
-        props.put(LINGER_MS_CONFIG, 0);
+        props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 
         try(Producer<String, String> producer = new KafkaProducer<>(props, new StringSerializer(), new StringSerializer())) {
-
-            JsonObject json = Json.createObjectBuilder()
-                    .add("windrad", 6)
-                    .add("kw/h", 33)
-                    .build();
-
-            String msg = json.toString();
-
-            long t1 = System.currentTimeMillis();
 
             for (int i = 1; i <= 10; i++) {
 
                 String key = String.valueOf(round(random() * 1000));
 
-                producer.send(new ProducerRecord<>("produktion", key, msg));
-            }
-            System.out.println("Zeit: " + ((System.currentTimeMillis() - t1) / 1000f) + " Sek.");
+                JsonObject json = Json.createObjectBuilder()
+                        .add("windrad", 6)
+                        .add("kw/h", Double.valueOf(round(random() * 10000000L)).intValue() / 1000.0)
+                        .build();
 
+                producer.send(new ProducerRecord<>("produktion", key, json.toString()));
+            }
         }
+        System.out.println("fertig!");
     }
 }

@@ -3,6 +3,7 @@ package de.predic8.i_headers;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.common.serialization.StringDeserializer;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -18,33 +19,18 @@ public class HeaderConsumer {
     public static void main(String[] args) {
 
         Properties props = new Properties();
-        props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         props.put(GROUP_ID_CONFIG, "a");
-        props.put(ENABLE_AUTO_COMMIT_CONFIG, "true");
-        props.put(AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
-        props.put(SESSION_TIMEOUT_MS_CONFIG, "30000");
-        props.put(KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put(VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
 
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe( singletonList("produktion2"));
+        try (KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props, new StringDeserializer(), new StringDeserializer())) {
+            consumer.subscribe(singletonList("headers"));
 
-        System.out.println("HeaderConsumer gestartet!");
-
-        while(true) {
-
-            ConsumerRecords<String, String> records = consumer.poll( ofSeconds(1));
-            if (records.count() == 0)
-                continue;
-
-            for (ConsumerRecord<String, String> rec : records) {
-
-                System.out.printf("offset= %d, key= %s, value= %s\n", rec.offset(), rec.key(), rec.value());
-
+            while (true) {
+                for (ConsumerRecord<String, String> rec : consumer.poll(ofSeconds(1))) {
+                    System.out.printf("offset= %d, key= %s, value= %s\n", rec.offset(), rec.key(), rec.value());
+                }
             }
-
-
         }
     }
 }

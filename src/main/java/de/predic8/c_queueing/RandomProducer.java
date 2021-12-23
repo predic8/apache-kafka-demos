@@ -1,7 +1,11 @@
 package de.predic8.c_queueing;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
+import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.LongSerializer;
+import org.apache.kafka.common.serialization.StringSerializer;
+
 import static java.lang.Math.random;
 import static java.lang.Math.round;
 
@@ -14,24 +18,17 @@ public class RandomProducer {
     public static void main(String[] args) {
 
         Properties props = new Properties();
-        props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-        props.put(ACKS_CONFIG, "all");
-        props.put(RETRIES_CONFIG, 0);
-        props.put(BATCH_SIZE_CONFIG, 16384);
-        props.put(LINGER_MS_CONFIG, 0);
-        props.put(BUFFER_MEMORY_CONFIG, 33554432);
-        props.put(KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.LongSerializer");
-        props.put(VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+        props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
 
 
-        org.apache.kafka.clients.producer.Producer<Long, String> producer = new KafkaProducer<>(props);
+        try(Producer<Long, String> producer = new KafkaProducer<>(props, new LongSerializer(), new StringSerializer())) {
 
-        System.out.println("Start sending!");
-        for(int i = 1; i <= 12; i++) {
-            producer.send(new ProducerRecord<>("produktion", round(random() * 6) + 1, "Message: " + i));
+            System.out.println("Start sending!");
+            for (int i = 1; i <= 12; i++) {
+                producer.send(new ProducerRecord<>("produktion", round(random() * 6) + 1, "Message: " + i));
+            }
+            System.out.println("done!");
+
         }
-        System.out.println("done!");
-
-        producer.close();
     }
 }

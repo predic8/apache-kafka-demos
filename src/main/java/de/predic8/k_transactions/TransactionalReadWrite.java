@@ -7,8 +7,9 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 
-import java.time.Duration;
 import java.util.Properties;
 
 import static java.time.Duration.ofMillis;
@@ -22,68 +23,55 @@ public class TransactionalReadWrite {
 
     public static void main(String[] args) {
 
-        Producer<String, String> producer = new KafkaProducer<>(producerProperties());
+        try(Producer<String, String> producer = new KafkaProducer<>(producer(), new StringSerializer(), new StringSerializer())) {
+            producer.initTransactions();
 
-        producer.initTransactions();
+            try (KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumer(), new StringDeserializer(), new StringDeserializer())) {
+                consumer.subscribe(singleton("produktion"), new OffsetBeginningRebalanceListener(consumer, "produktion"));
 
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumerProperties());
+                while (true) {
+                    ConsumerRecords<String, String> records = consumer.poll(ofMillis(10));
 
-        consumer.subscribe(singleton("produktion"),new OffsetBeginningRebalanceListener(consumer,"produktion"));
+                    System.out.println("Received something!");
 
-        while (true) {
-            ConsumerRecords<String, String> records = consumer.poll( ofMillis(10));
-
-            System.out.println("Received something!");
-
-            producer.beginTransaction();
-            for (ConsumerRecord<String, String> record : records) {
-                System.out.println("record = " + record);
-                producer.send(new ProducerRecord<>("produktion-tmp", record.key(), record.value()));
-            }
+                    producer.beginTransaction();
+                    for (ConsumerRecord<String, String> record : records) {
+                        System.out.println("record = " + record);
+                        producer.send(new ProducerRecord<>("produktion-tmp", record.key(), record.value()));
+                    }
 
 //            producer.sendOffsetsToTransaction(currentOffsets(consumer), group);
-            producer.commitTransaction();
+                    producer.commitTransaction();
 //            producer.abortTransaction();
+                }
+            }
         }
     }
 
-    private static Properties consumerProperties() {
-        Properties props = commonProperties();
+    private static Properties consumer() {
+        Properties props = common();
         props.put(CLIENT_ID_CONFIG, "consumer-b");
-        props.put(GROUP_ID_CONFIG, "foo");
-        props.put(ENABLE_AUTO_COMMIT_CONFIG, "true");
-        props.put(AUTO_COMMIT_INTERVAL_MS_CONFIG, "1000");
-        props.put(SESSION_TIMEOUT_MS_CONFIG, "30000");
-        props.put(KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put(VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
+        props.put(GROUP_ID_CONFIG, "kopierer");
+        //props.put(ENABLE_AUTO_COMMIT_CONFIG, "true");
 
         // Nur nicht-transaktionale oder committed Nachrichten lesen
         props.put("isolation.level", "read_committed");
-
-
         return props;
     }
 
-    private static Properties producerProperties() {
-        Properties props = commonProperties();
+    private static Properties producer() {
+        Properties props = common();
         props.put(LINGER_MS_CONFIG, 100);
-        props.put(BUFFER_MEMORY_CONFIG, 33554432);
-        props.put(KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-        props.put(VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
         props.put(BATCH_SIZE_CONFIG, 16000);
-        props.put(ACKS_CONFIG, "all");
         // Verhindert Zombie Instanzen dieses Producers
         props.put("transactional.id", "my-transactional-id");
 
         return props;
     }
 
-    private static Properties commonProperties() {
+    private static Properties common() {
         Properties props = new Properties();
-        props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
-
-
-
+        props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         return props;
     }
 }

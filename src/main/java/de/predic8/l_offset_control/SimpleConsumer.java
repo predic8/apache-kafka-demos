@@ -24,10 +24,7 @@ public class SimpleConsumer {
         Properties props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(GROUP_ID_CONFIG, "k");
-        props.put(ENABLE_AUTO_COMMIT_CONFIG, "false");
-//        props.put(KEY_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.IntegerDeserializer");
-//        props.put(VALUE_DESERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringDeserializer");
-
+        props.put(ENABLE_AUTO_COMMIT_CONFIG, "false"); // Wichtig!
 
         KafkaConsumer<Integer, String> consumer = new KafkaConsumer<>(props, new IntegerDeserializer(), new StringDeserializer());
 
