@@ -16,4 +16,4 @@ Log*
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
 
-src/main/java/de/predic8/n_avro/User.java
+src/main/java/de/predic8/n_avro/Article.java
