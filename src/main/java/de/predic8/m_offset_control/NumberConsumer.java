@@ -1,4 +1,4 @@
-package de.predic8.l_offset_control;
+package de.predic8.m_offset_control;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;

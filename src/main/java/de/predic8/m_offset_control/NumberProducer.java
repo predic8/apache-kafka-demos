@@ -1,4 +1,4 @@
-package de.predic8.l_offset_control;
+package de.predic8.m_offset_control;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -6,7 +6,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.IntegerSerializer;
 
 import java.util.Properties;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static de.predic8.utils.Utils.randInt;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG;
