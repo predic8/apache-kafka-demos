@@ -17,3 +17,5 @@ Log*
 !/.mvn/wrapper/maven-wrapper.jar
 
 src/main/java/de/predic8/n_avro/Article.java
+
+article.avro
