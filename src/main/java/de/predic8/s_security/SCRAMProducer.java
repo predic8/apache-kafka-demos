@@ -17,7 +17,7 @@ public class SCRAMProducer {
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
 
         props.put("sasl.mechanism","SCRAM-SHA-256");
-        props.put("security.protocol","SASL_PLAINTEXT");
+        props.put("security.protocol","SASL_SSL");
 
         try(Producer<String, String> producer = new KafkaProducer<>(props, new StringSerializer(), new StringSerializer())) {
             producer.send(new ProducerRecord<>("produktion", "1", "And the message is...")).get();

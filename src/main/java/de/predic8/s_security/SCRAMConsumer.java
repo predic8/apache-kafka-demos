@@ -17,7 +17,7 @@ public class SCRAMConsumer {
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
 
         props.put("sasl.mechanism","SCRAM-SHA-256");
-        props.put("security.protocol","SASL_PLAINTEXT");
+        props.put("security.protocol","SASL_SSL");
 
         props.put(GROUP_ID_CONFIG, "arbeiter");
 

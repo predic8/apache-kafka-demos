@@ -13,3 +13,13 @@
     sasl.enabled.mechanisms=SCRAM-SHA-256
     
     listener.name.sasl_plaintext.scram-sha-256.sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required;
+
+## TLS
+
+### server.properties
+
+    ssl.keystore.location=config/broker-1.p12
+    ssl.keystore.password=abc123
+    ssl.key.password=abc123
+    ssl.truststore.location=config/ca.jks
+    ssl.truststore.password=abc123
