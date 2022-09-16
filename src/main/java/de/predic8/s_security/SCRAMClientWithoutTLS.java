@@ -15,9 +15,6 @@ public class SCRAMClientWithoutTLS {
         Properties props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
 
-        props.put("sasl.mechanism","SCRAM-SHA-256");
-        props.put("security.protocol","SASL_PLAINTEXT");
-
         try(Producer<String, String> producer = new KafkaProducer<>(props, new StringSerializer(), new StringSerializer())) {
 
             int i = 0;
