@@ -17,11 +17,11 @@ public class RandomProducer {
 
     public static void main(String[] args) {
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
 
 
-        try(Producer<Long, String> producer = new KafkaProducer<>(props, new LongSerializer(), new StringSerializer())) {
+        try(var producer = new KafkaProducer<>(props, new LongSerializer(), new StringSerializer())) {
 
             System.out.println("Start sending!");
             for (int i = 1; i <= 12; i++) {
