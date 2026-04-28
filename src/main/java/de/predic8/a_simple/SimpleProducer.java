@@ -17,19 +17,19 @@ public class SimpleProducer {
 
     public static void main(String[] args) {
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
 
-        try(Producer<String, String> producer = new KafkaProducer<>(props, new StringSerializer(), new StringSerializer())) {
+        try(var producer = new KafkaProducer<>(props, new StringSerializer(), new StringSerializer())) {
 
             int i = 0;
             long t1 = System.currentTimeMillis();
 
             for (; i < 10; i++) {
 
-                String key = String.valueOf(round(random() * 1000));
+                var key = String.valueOf(round(random() * 1000));
 
-                JsonObject json = Json.createObjectBuilder()
+                var json = Json.createObjectBuilder()
                         .add("windrad", key)
                         .add("kw", Double.valueOf(round(random() * 10000000L)).intValue() / 1000.0)
                         .build();
