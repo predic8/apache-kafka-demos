@@ -9,7 +9,7 @@ public class ArtikelProducer {
 
     public static void main(String[] args) {
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ACKS_CONFIG, "all");
         props.put(RETRIES_CONFIG, 0);
