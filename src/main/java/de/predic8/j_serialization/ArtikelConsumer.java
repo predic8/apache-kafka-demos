@@ -8,7 +8,7 @@ public class ArtikelConsumer {
 
     public static void main(String[] args) {
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(GROUP_ID_CONFIG, "a");
         props.put(ENABLE_AUTO_COMMIT_CONFIG, "true");
