@@ -7,13 +7,15 @@ import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
 
 import java.util.Properties;
+import java.util.Random;
 
 import static java.time.Duration.ofSeconds;
 import static java.util.Collections.singletonList;
-import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG;
-import static org.apache.kafka.clients.consumer.ConsumerConfig.GROUP_ID_CONFIG;
+import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 
 public class NumberConsumer {
+
+    private static final Random RAND = new Random();
 
     public static void main(String[] args) throws Exception {
 
@@ -22,6 +24,9 @@ public class NumberConsumer {
         var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         props.put(GROUP_ID_CONFIG, "numbers");
+        props.put(SESSION_TIMEOUT_MS_CONFIG, 6_000);
+        props.put(HEARTBEAT_INTERVAL_MS_CONFIG, 2_000);
+        props.put(MAX_POLL_INTERVAL_MS_CONFIG, 300_000);
 
         try (var consumer = new KafkaConsumer<>(props, new IntegerDeserializer(), new IntegerDeserializer())) {
 
