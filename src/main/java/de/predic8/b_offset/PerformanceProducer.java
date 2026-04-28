@@ -17,25 +17,25 @@ public class PerformanceProducer {
 
     public static void main(String[] args) {
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         props.put(BATCH_SIZE_CONFIG, 0);
         props.put(LINGER_MS_CONFIG, 0);
 
-        try(Producer<String, String> producer = new KafkaProducer<>(props, new StringSerializer(), new StringSerializer())) {
+        try(var producer = new KafkaProducer<>(props, new StringSerializer(), new StringSerializer())) {
 
-            JsonObject json = Json.createObjectBuilder()
+            var json = Json.createObjectBuilder()
                     .add("windrad", 6)
                     .add("kw/h", 33)
                     .build();
 
-            String msg = json.toString();
+            var msg = json.toString();
 
             long t1 = System.currentTimeMillis();
 
             for (int i = 1; i <= 10; i++) {
 
-                String key = String.valueOf(round(random() * 1000));
+                var key = String.valueOf(round(random() * 1000));
 
                 producer.send(new ProducerRecord<>("produktion", key, msg));
             }

@@ -9,14 +9,13 @@ import java.util.Properties;
 
 import static java.time.Duration.ofSeconds;
 import static java.util.Collections.singletonList;
-import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG;
-import static org.apache.kafka.clients.consumer.ConsumerConfig.GROUP_ID_CONFIG;
+import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 
 public class OffsetConsumer {
 
     public static void main(String[] args) {
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         props.put(GROUP_ID_CONFIG, "offset");
 
@@ -24,13 +23,13 @@ public class OffsetConsumer {
             consumer.subscribe( singletonList("produktion"), new OffsetBeginningRebalanceListener(consumer, "produktion"));
 
             while(true) {
-                ConsumerRecords<String, String> recs = consumer.poll(ofSeconds(1));
+                var recs = consumer.poll(ofSeconds(1));
                 if (recs.count() == 0)
                     continue;
 
                 System.out.println(" Count: " + recs.count());
 
-                for (ConsumerRecord<String, String> rec : recs)
+                for (var rec : recs)
                     System.out.printf("offset= %d, key= %s, value= %s\n", rec.offset(), rec.key(), rec.value());
             }
         }
