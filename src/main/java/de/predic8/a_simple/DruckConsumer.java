@@ -15,21 +15,20 @@ public class DruckConsumer {
 
     public static void main(String[] args) {
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         props.put(GROUP_ID_CONFIG, "druck");
 
         System.out.println("Druck-Consumer gestartet!");
 
-        try(KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props, new StringDeserializer(), new StringDeserializer()) ) {
+        try(var consumer = new KafkaConsumer<>(props, new StringDeserializer(), new StringDeserializer()) ) {
+
             consumer.subscribe( singletonList("produktion"));
 
-            while (true){
-                for (ConsumerRecord<String, String> rec : consumer.poll(ofSeconds(1)))
+            while(true){
+                for (var rec : consumer.poll(ofSeconds(1)))
                     System.out.printf("offset= %d, key= %s, value= %s\n", rec.offset(), rec.key(), rec.value());
             }
         }
-
     }
-
 }
