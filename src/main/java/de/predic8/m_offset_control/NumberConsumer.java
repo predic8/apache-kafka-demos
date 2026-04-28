@@ -17,22 +17,22 @@ public class NumberConsumer {
 
     public static void main(String[] args) throws Exception {
 
-        TopicPartition partition = new TopicPartition("numbers", 0);
+        var partition = new TopicPartition("numbers", 0);
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         props.put(GROUP_ID_CONFIG, "numbers");
 
-        try (KafkaConsumer<Integer, Integer> consumer = new KafkaConsumer<>(props, new IntegerDeserializer(), new IntegerDeserializer())) {
+        try (var consumer = new KafkaConsumer<>(props, new IntegerDeserializer(), new IntegerDeserializer())) {
 
             consumer.subscribe(singletonList("numbers"));
 
             while (true) {
 
-                ConsumerRecords<Integer, Integer> recs = consumer.poll(ofSeconds(1));
+                var recs = consumer.poll(ofSeconds(1));
                 System.out.println(recs.count() + " gelesen.");
 
-                for (ConsumerRecord<Integer, Integer> rec : recs) {
+                for (var rec : recs) {
 
                     System.out.println("Offset: " + rec.offset() + " Value: " + rec.value());
 

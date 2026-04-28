@@ -15,11 +15,11 @@ public class NumberProducer {
 
     public static void main(String[] args) throws Exception {
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         props.put(ACKS_CONFIG,"1"); // Notwendig da min.insync.replicas im Broker vermutlich auf 3 steht.
 
-        try(Producer<Integer, Integer> producer = new KafkaProducer<>(props, new IntegerSerializer(), new IntegerSerializer())) {
+        try(var producer = new KafkaProducer<>(props, new IntegerSerializer(), new IntegerSerializer())) {
             for(int i=0; i < 10000; i++) {
                 producer.send(new ProducerRecord<>("numbers", i, randInt(7)));
                 Thread.sleep(2000);
