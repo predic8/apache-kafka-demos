@@ -24,19 +24,19 @@ public class TransactionalReadWrite {
 
     public static void main(String[] args) {
 
-        try(Producer<String, String> producer = new KafkaProducer<>(producer(), new StringSerializer(), new StringSerializer())) {
+        try(var producer = new KafkaProducer<>(producer(), new StringSerializer(), new StringSerializer())) {
             producer.initTransactions();
 
-            try (KafkaConsumer<String, String> consumer = new KafkaConsumer<>(consumer(), new StringDeserializer(), new StringDeserializer())) {
+            try (var consumer = new KafkaConsumer<>(consumer(), new StringDeserializer(), new StringDeserializer())) {
                 consumer.subscribe(singleton("produktion"), new OffsetBeginningRebalanceListener(consumer, "produktion"));
 
                 while (true) {
-                    ConsumerRecords<String, String> records = consumer.poll(ofMillis(10));
+                    var records = consumer.poll(ofMillis(10));
 
                     System.out.println("Received " + records.count());
 
                     producer.beginTransaction();
-                    for (ConsumerRecord<String, String> record : records) {
+                    for (var record : records) {
                         System.out.println("record = " + record);
                         producer.send(new ProducerRecord<>("produktion-tmp", record.key(), record.value()));
                     }
@@ -49,7 +49,7 @@ public class TransactionalReadWrite {
     }
 
     private static Properties consumer() {
-        Properties props = common();
+        var props = common();
         props.put(CLIENT_ID_CONFIG, "consumer-b");
         props.put(GROUP_ID_CONFIG, "kopierer");
         props.put(ENABLE_AUTO_COMMIT_CONFIG, "false");
@@ -62,7 +62,7 @@ public class TransactionalReadWrite {
     }
 
     private static Properties producer() {
-        Properties props = common();
+        var props = common();
         props.put(LINGER_MS_CONFIG, 100);
         props.put(BATCH_SIZE_CONFIG, 16000);
         // Verhindert Zombie Instanzen dieses Producers
@@ -72,7 +72,7 @@ public class TransactionalReadWrite {
     }
 
     private static Properties common() {
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         return props;
     }
