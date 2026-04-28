@@ -18,22 +18,22 @@ public class SimpleConsumer {
 
     public static void main(String[] args) {
 
-        Properties props = new Properties();
+        var props = new Properties();
         props.put(BOOTSTRAP_SERVERS_CONFIG, "127.0.0.1:9092");
         props.put(GROUP_ID_CONFIG, "simple");
 
-        try(KafkaConsumer<Long, String> consumer = new KafkaConsumer<>(props, new LongDeserializer(), new StringDeserializer())) {
+        try(var consumer = new KafkaConsumer<>(props, new LongDeserializer(), new StringDeserializer())) {
             consumer.subscribe(singletonList("produktion"), new LogRebalanceListener());
 
             while(true) {
-                ConsumerRecords<Long, String> recs = consumer.poll(ofSeconds(1));
+                var recs = consumer.poll(ofSeconds(1));
                 if (recs.count() == 0)
                     continue;
 
                 System.out.print("Partitions: " + recs.partitions());
                 System.out.println(" Count: " + recs.count());
 
-                for (ConsumerRecord<Long, String> rec : recs)
+                for (var rec : recs)
                     System.out.printf("partition=%d, offset= %d, key= %s, value= %s\n", rec.partition(), rec.offset(), rec.key(), rec.value());
             }
         }
